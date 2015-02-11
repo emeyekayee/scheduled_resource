@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Mike Cannon"]
   spec.email         = ["michael.j.cannon@gmail.com"]
   spec.summary       = %q{Help display how something is used over time.}
-  spec.description   = %q{== README.md}
+  spec.description   = %Q{== README.md:\n#{IO.read 'README.md'}}
   spec.homepage      = ""
   spec.license       = "MIT"
 

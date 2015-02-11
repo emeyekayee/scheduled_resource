@@ -13,7 +13,6 @@ The schedule configuration comes from <tt>config/resource_schedule.yml</tt>
 
 
 
-
 The <b>ScheduledResource</b> class manages resource and use_block class names, id's and labels for a schedule.  A ScheduledResource instance ties together:
 
  1. A resource class (eg Station),
@@ -30,9 +29,9 @@ it is used by class methods
 <tt>ResourceUseBlock.get_all_blocks()</tt> to select the right blocks
 for the resource.
 
-Items 1 and 2 above are are combined (with a '_') to form "tags" -- ids for the DOM.
+Resource class name and ids are are combined (with a '_') to form tags that also
+serve as ids for the DOM.
 
-See also:              ResourceUseBlock.
 
 
 ## Configuration 
@@ -48,7 +47,7 @@ top-level sections:
 Something else you would see in a schedule would be headers and labels
 -- perhaps one row with the date and another row with the hour.
 Headers with labels also fit the model of resources and use_blocks.
-Basic classes for those are included in this gem.
+Basic timezone-aware classes (ZTime*) for those are included in this gem.
 
 
 
@@ -71,7 +70,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+To Do: Write usage instructions here
 
 ## Contributing
 
