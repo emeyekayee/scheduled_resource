@@ -11,6 +11,15 @@
 
 require "scheduled_resource/version"
 
+require 'resource_use_block'
+
+require 'z_time_header'
+require 'z_time_header_day'
+require 'z_time_header_hour'
+require 'z_time_label'
+require 'z_time_label_day'
+require 'z_time_label_hour'
+
 # A "scheduled resource" is something that can be used for one thing at a time.
 #
 # Example: A Room (resource) is scheduled for a meeting (resource use block)
