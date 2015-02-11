@@ -1,3 +1,3 @@
-module ScheduledResource
+class ScheduledResource
   VERSION = "0.0.1"
 end

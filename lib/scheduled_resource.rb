@@ -1,5 +1,5 @@
 require "scheduled_resource/version"
 
-module ScheduledResource
+class ScheduledResource
   # Your code goes here...
 end
