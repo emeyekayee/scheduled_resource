@@ -5,7 +5,7 @@ It began life as a Rails/Ajax TV schedule but over time I've used it for
 other things and found it useful.
 
 A _scheduled resource_ is something that can be used for one thing at a time.  Say a TV station
-(resource) is scheduled to show "Mr Ed" from 10am to 11am on Saturday.  That showing is a _resource use block_.  
+(resource) is scheduled to show "Mr Ed" from 10am to 11am on Saturday.  That showing is a _resource use block_.
 Resources and use_blocks are often models in a Rails app.  Each resource gets one row in the display.
 
 The schedule configuration comes from <tt>config/resource_schedule.yml</tt>
@@ -23,7 +23,7 @@ The id (2 above) is used to
   - select a resource <em>instance</em> and
   - select instances of the <em>resource use block</em> class (eg Program).
 
-The id <em>could</em> be a database id but more often is something a little more suited to human use configuration.  
+The id <em>could</em> be a database id but more often is something a little more suited to human use configuration.
 In any case it is used by model class method
 <tt>ResourceUseBlock.get_all_blocks()</tt> to select the right blocks for a resource.
 
