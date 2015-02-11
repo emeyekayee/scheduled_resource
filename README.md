@@ -13,7 +13,7 @@ The schedule configuration comes from <tt>config/resource_schedule.yml</tt>
 
 
 
-The <b>ScheduledResource<b> class manages resource and use_block class names, id's and labels for a schedule.  A ScheduledResource instance ties together:
+The <b>ScheduledResource</b> class manages resource and use_block class names, id's and labels for a schedule.  A ScheduledResource instance ties together:
 
  1. A resource class (eg Station),
  2. An id, and
