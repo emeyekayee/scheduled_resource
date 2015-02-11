@@ -4,15 +4,16 @@ This gem is for displaying how something is used over periods of time.
 It began life as a Rails/Ajax TV schedule but over time I've used it for
 other things and found it useful.
 
-A _scheduled resource_ is something that can be used for one thing at a time.  So a TV station
-(resource) is scheduled to show "Mr Ed" from 10am to 11am on Saturday.  That showing is a _resource use block_.  Resources and use_blocks would typically be Rails models.  Each resource gets one row in the display.
+A _scheduled resource_ is something that can be used for one thing at a time.  Say a TV station
+(resource) is scheduled to show "Mr Ed" from 10am to 11am on Saturday.  That showing is a _resource use block_.  
+Resources and use_blocks are often models in a Rails app.  Each resource gets one row in the display.
 
 The schedule configuration comes from <tt>config/resource_schedule.yml</tt>
 
 
 
 
-The ScheduledResource class manages resource and use_block class names, id's and labels for a schedule.  A ScheduledResource instance ties together:
+The <b>ScheduledResource<b> class manages resource and use_block class names, id's and labels for a schedule.  A ScheduledResource instance ties together:
 
  1. A resource class (eg Station),
  2. An id, and
