@@ -6,8 +6,9 @@ other things and found it useful.
 
 A _scheduled resource_ is something that can be used for one thing at a time.  Say a TV station
 (resource) is scheduled to show "Mr Ed" from 10am to 11am on Saturday.  That showing is a _resource use block_.
-Resources and use_blocks are often models in a Rails app.  Each resource gets one row in the display.
+Each resource gets one row in the display.
 
+Resources and use_blocks are often models in a Rails app.  
 The schedule configuration comes from <tt>config/resource_schedule.yml</tt>
 
 
@@ -19,32 +20,29 @@ The <b>ScheduledResource</b> class manages resource and use_block class names, i
  2. An id, and
  3. Strings and other assets that will go into the DOM.
 
-The id (2 above) is used to
+The id is used to
   - select a resource <em>instance</em> and
   - select instances of the <em>resource use block</em> class (eg Program).
 
-The id <em>could</em> be a database id but more often is something a little more suited to human use configuration.
-In any case it is used by model class method
-<tt>ResourceUseBlock.get_all_blocks()</tt> to select the right blocks for a resource.
+The id <em>could</em> be a database id but more often is something a
+little more suited to human use in the configuration file.  In any case
+it is used by class methods
+<tt>ResourceUseBlock.get_all_blocks()</tt> to select the right blocks
+for the resource.
 
 Items 1 and 2 above are are combined (with a '_') to form "tags" -- ids for the DOM.
 
 See also:              ResourceUseBlock.
 
 
+## Configuration 
 
-Configuration is loaded from config/resource_schedule.yml:
- - all_resources::      Resources in display order.
- - rsrcs_by_kind::      A hash with resources grouped by kind (resource class).
- - rsrc_of_tag::        Indexed by text tag: kind_subid.
- - \visible_time::       Span of time window.
-+
+Configuration is loaded from config/resource_schedule.yml which has three
+top-level sections:
+ - ResourceKinds:  A hash where the key is a Resource and the value is a UseBlock. (Both class names)
+ - Resources:  A list where each item is a resource Class followed by one or more resource ids.
+ - visibleTime:  The visible timespan of the schedule (seconds).
 
-
-This method invokes that method on each of the <em>resource use</em>
-classes.  It returns a hash where:
-  Key     is a Resource (rsrc);
-  Value   is an array of use-block instances (rubs).
 
 
 Something else you would see in a schedule would be headers and labels
