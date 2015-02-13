@@ -1,0 +1,96 @@
+#!/usr/bin/env ruby
+
+# This file is based heavily on Capistrano's `capify` command
+
+require 'optparse'
+require 'fileutils'
+
+def place_file( base, file, content )
+  file = File.join(base, file)
+  if File.exists?(file)
+    warn "[skip] `#{file}' already exists"
+  elsif File.exists?(file.downcase)
+    warn "[skip] `#{file.downcase}' exists, which could conflict with `#{file}'"
+  elsif !File.exists?(File.dirname(file))
+    warn "[skip] directory `#{File.dirname(file)}' does not exist"
+  else
+    puts "[add] writing `#{file}'"
+    File.open(file, "w") { |f| f.write(content) }
+  end
+end
+
+def js_files_to_copy
+  dir = File.expand_path('../../lib/assets/javascripts' , __FILE__)
+  Dir[ dir + "/*" ]
+end
+
+def to_js_dir(base)  File.join( base, 'vendor/assets/javascripts') end
+def to_css_dir(base) File.join( base, 'vendor/assets/stylesheets') end
+
+def css_files_to_copy
+  dir = File.expand_path('../../lib/assets/stylesheets' , __FILE__)
+  Dir[ dir + "/*" ]
+end
+
+
+PROGRAM = File.basename($0)
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: #{PROGRAM} [path]"
+
+  begin
+    opts.parse!(ARGV)
+  rescue OptionParser::ParseError => e
+    warn e.message
+    puts opts
+    exit 1
+  end
+end
+
+unless ARGV.empty?
+  if !File.exists?(ARGV.first)
+    abort "`#{ARGV.first}' does not exist."
+  elsif !File.directory?(ARGV.first)
+    abort "`#{ARGV.first}' is not a directory."
+  elsif ARGV.length > 1
+    abort "Too many arguments; please specify only the directory to wheneverize."
+  end
+end
+
+base = ARGV.empty? ? '.' : ARGV.shift
+
+FileUtils.cp   js_files_to_copy, to_js_dir(base)
+FileUtils.cp  css_files_to_copy, to_css_dir(base)
+
+
+config_content = %q{
+# Configuration file for ScheduledResource schedule widget.
+#
+
+# Classes that represent a resource and resource-use pair. 
+ResourceKinds:
+# Resource:             Resource Use
+  ZTimeHeaderDay:       ZTimeLabelDay
+  ZTimeHeaderHour:      ZTimeLabelHour
+
+# Other examples:
+# ConferenceRoom:       Meeting
+# TvStation:            ProgramEvent
+
+
+# The schedule display sizes itself to the page width.  What span
+# of time should this be in seconds?  (Value string is eval'd)
+visibleTime: 3.hours
+       
+# A row in the display is specified by a pair: (Resource_class, Resource_id)
+# The Resource_id is given as a string to be interpreted by the specific
+# classes.  For the included ZTime* classes the Resource_id (rid) indicates
+# the timezone, [-8 .. -5] represent Pacific .. Eastern US timezones.
+Resources:
+   - ZTimeHeaderDay       -8
+   - ZTimeHeaderHour      -8
+}
+
+place_file( base, 'config/resource_schedule.yml', config_content)
+
+
