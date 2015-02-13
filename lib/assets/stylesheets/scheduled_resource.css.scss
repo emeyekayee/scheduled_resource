@@ -1,0 +1,250 @@
+/* schedule.css.scss
+   Classes for scheduled_resource gem
+    - Mike Cannon (Mon Mar 4 '13)
+                                       (http://github.com/emeyekayee/tv4)
+                                       (michael.j.cannon@gmail.com)
+ */
+
+$bg-color:      #1B3B5F;
+            /*  #21456F; */
+            /*  #002650; */
+$daytime-bg:    #33669E;
+$nitetime-bg:   #102441;
+
+
+body {
+  border:           0;
+  margin:           10px;
+  padding:          0;
+  font-size:        11pt;
+  font-family:      Arial, Helvetica, sans-serif;
+  background:       $bg-color;
+}
+
+h2        {  color: #204882 }
+
+a:link    {  color: white;  text-decoration: none;}
+a:visited {  color: white;  text-decoration: none;}
+
+
+.timespan {
+  position:         absolute;
+  left:             0px;
+}
+
+.flags {
+  color:            #ffff9b;
+}
+
+.blockdiv {
+  position:         absolute;
+  border:           1px solid $bg-color;
+  font-size:        11px;
+  line-height:      1.2;
+  white-space:      nowrap;
+  overflow:         hidden;
+}
+
+#current-time-cursor {
+  border-left:      1px solid rgba(255,0,0,.65);
+  z-index:          1;
+  width:            1px;
+  height:           4000px;
+  position:         absolute;
+}
+
+.text_locator {
+  position:         absolute;
+  left:             2px;
+  right:            4px;
+  overflow:         hidden;
+}
+
+#schedule-container{
+  position:         relative;
+}
+
+#scrolling-container {
+  overflow-x:       scroll;
+  padding-bottom:   1px;
+  vertical-align:   top;
+  width:            750px;
+  border:           1px solid red;
+}
+
+#positioned-container {
+  overflow:         hidden;
+  margin:           1px;
+  margin-top:       0px;
+  width:            140000px;
+  position:         relative;
+}
+
+#labels-container {
+  width:            60px;
+  vertical-align:   top;
+  position:         absolute;
+}
+
+#timespans-container {
+  vertical-align:   top;
+  position:         absolute;
+  left:             65px;
+}
+
+#resource-labels {
+  position:         relative;
+  padding-bottom:   2px;
+  left:             5px;
+  background:       $bg-color;
+  border:           1px solid red;
+}
+
+
+#scrollbar-hider {
+  width:            811px;   /* per #resource-labels + */
+  height:           20px;    /* #scrolling-container   */
+  background:       $bg-color;
+  position:         relative;
+  top:              -20px;
+  left:             5px;
+  border-top:       1px solid red;
+}
+
+.rsrcRow {
+  display:          block;
+  margin:           1px;
+  margin-left:      0px;
+}
+
+.rsrclabel {
+  position:         absolute;
+  width:            56px;
+  border:           1px solid $bg-color;
+  background:       transparent; /* #265990 */
+  font-weight:      bold;
+  text-align:       center;
+  color:            white;
+
+  img {
+    position:         absolute;
+    left:             0;
+    z-index:          0;
+    background:       $bg-color;
+  }
+
+  > .label-text {
+    position:         absolute;
+    z-index:          2;
+    color:            rgba(255,255,255,.65);  /* #fff */
+    text-align:       center;
+    width:            56px;
+  }
+
+  // This is used to shelve a background image (if any) vs foreground label text.
+  > div.filter {
+    position:         absolute;
+    background:       $bg-color;
+    width:            56px;
+    z-index:          1;
+    opacity:          0.5;
+  }
+}
+
+
+
+.ZTimeHeaderHourrow,
+.ZTimeHeaderHourRow,
+.ZTimeHeaderDayrow,
+.ZTimeHeaderDayRow {
+  height:           22px;
+
+  .rsrclabel {
+    height:         22px;
+    width:          56px;
+    div {
+      font-size:    19px;
+      white-space:  nowrap;
+      overflow:     hidden;
+      text-align:   center;
+      color:        rgba(204, 204, 255, 0.5);
+    }
+
+    img {
+      height:       22px;   /* Is "inherit" still a no go for IE ? */
+      width:        56px;
+    }
+
+    > div.filter {
+      height:       22px;
+    }
+  }
+
+  .text_locator {
+    text-align:     center;
+  }
+
+  .blockdiv {
+    height:         18px;
+    padding:        2px;
+    background:     #265990;
+    font-size:      14px;
+  }
+}
+
+
+.ZTimeHeaderHourrow,
+.ZTimeHeaderHourRow {
+  .blockdiv {
+    font-size:      12px;
+    padding-top:     4px;
+  }
+}
+
+
+.ZTimeHeaderDayrow,
+.ZTimeHeaderDayRow {
+  .blockdiv {
+    font-size:      16px;
+  }
+}
+
+
+.blockdiv.ZTimeHeaderDayRow { /* background: $daytime-bg; */
+  background: -webkit-linear-gradient(left,
+                                      $nitetime-bg, $nitetime-bg 24%, $daytime-bg 26%,
+                                      $daytime-bg 74%, $nitetime-bg 76%, $nitetime-bg );
+}
+
+.blockdiv.dayTimeblock  { background: $daytime-bg  }
+.blockdiv.niteTimeblock { background: $nitetime-bg }
+
+
+// This is included as a model for adding a new scheduled resource type.
+// In fact is it what is used for the tv4 example.
+// .Stationrow {
+//   height:           36px;
+
+//   .rsrclabel {
+//     div {
+//       font-size:    16pt;
+//     }
+
+//     img {
+//       height:       36px;       /* Is "inherit" still a no go for IE?  */
+//       width:        56px;
+//     }
+
+//     > div.filter {
+//       height:       36px;
+//     }
+
+//   }
+
+//   .blockdiv {
+//     height:         32px;
+//     padding:        2px;
+//   }
+// }
+
+
