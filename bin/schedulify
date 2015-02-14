@@ -24,12 +24,52 @@ def js_files_to_copy
   Dir[ dir + "/*" ]
 end
 
-def to_js_dir(base)  File.join( base, 'vendor/assets/javascripts') end
-def to_css_dir(base) File.join( base, 'vendor/assets/stylesheets') end
-
 def css_files_to_copy
   dir = File.expand_path('../../lib/assets/stylesheets' , __FILE__)
   Dir[ dir + "/*" ]
+end
+
+def to_js_dir(base)   File.join base, 'vendor/assets/javascripts' end
+def to_css_dir(base)  File.join base, 'vendor/assets/stylesheets' end
+def js_manifest(base) File.join base, 'app/assets/javascripts/application.js' end
+def css_manifest(base) File.join base, 'app/assets/stylesheets/application.css' end
+
+def js_require_content
+  <<EOF
+//= require use_block
+//= require time_pix
+//= require justify_tweaks
+EOF
+end
+
+def insert_js_requires( file )
+  manifest_lines = IO.readlines( file )
+  ix = manifest_lines.rindex{|l| l =~ %r[^//= require.+(jquery|angular)] }
+
+  manifest_lines[ix] << js_require_content
+  puts "[modify] writing `#{file}'"
+  File.open(file, "w") { |f| f.write( manifest_lines.join ) }
+rescue
+  puts "Failed to edit file #{file}; continuing..."
+  puts "Be sure these js dependencies are handled:\n#{js_require_content}\n\n"
+end
+
+def css_require_content
+  <<EOF
+ *= require scheduled_resource
+EOF
+end
+
+def insert_css_requires( file )
+  manifest_lines = IO.readlines( file )
+  ix = manifest_lines.index{|l| l =~ %r[/^ *\*= require/] }
+
+  manifest_lines[ix] = css_require_content + manifest_lines[ix]
+  puts "[modify] writing `#{file}'"
+  File.open(file, "w") { |f| f.write( manifest_lines.join ) }
+rescue
+  puts "Failed to edit file #{file}; continuing..."
+  puts "Be sure these css dependencies are handled:\n#{css_require_content}\n\n"
 end
 
 
@@ -60,14 +100,22 @@ end
 base = ARGV.empty? ? '.' : ARGV.shift
 
 FileUtils.cp   js_files_to_copy, to_js_dir(base)
+FileUtils.cd( to_js_dir(base) ) do
+  FileUtils.cp  "blank.jpg",  "Day.jpg"
+  FileUtils.cp  "blank.jpg", "Hour.jpg"
+end
+
 FileUtils.cp  css_files_to_copy, to_css_dir(base)
+
+insert_js_requires   js_manifest(base)
+insert_css_requires css_manifest(base)
 
 
 config_content = %q{
 # Configuration file for ScheduledResource schedule widget.
 #
 
-# Classes that represent a resource and resource-use pair. 
+# Classes that represent a resource and resource-use pair.
 ResourceKinds:
 # Resource:             Resource Use
   ZTimeHeaderDay:       ZTimeLabelDay
@@ -77,11 +125,10 @@ ResourceKinds:
 # ConferenceRoom:       Meeting
 # TvStation:            ProgramEvent
 
-
 # The schedule display sizes itself to the page width.  What span
 # of time should this be in seconds?  (Value string is eval'd)
 visibleTime: 3.hours
-       
+
 # A row in the display is specified by a pair: (Resource_class, Resource_id)
 # The Resource_id is given as a string to be interpreted by the specific
 # classes.  For the included ZTime* classes the Resource_id (rid) indicates
@@ -94,3 +141,4 @@ Resources:
 place_file( base, 'config/resource_schedule.yml', config_content)
 
 
+insert_js_requires( js_manifest(base) )
