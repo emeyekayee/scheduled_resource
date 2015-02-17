@@ -10,8 +10,11 @@ along with utilities and protocols to connect them:
  - A basic Rails controller implementation.
 
 So we have a way to configure the schedule, internal
-methods to generate the data, and a way to retrieve data from the client.  
-But the gem is largely view-framework agnostic.  We could use a variety of client-side packages or even more traditional Rails view templates to generate HTML.
+methods to generate the data, and a way to retrieve
+data from the client.  But the gem is largely
+view-framework agnostic.  We could use a variety of
+client-side packages or even more traditional Rails
+view templates to generate HTML.
 
 In any case, to get a the most from a display like this
 we need some client-side code.  The gem includes
@@ -45,7 +48,8 @@ The id <em>could</em> be a database id but more
 often is something a little more suited to human use
 in the configuration.  In any case it is used by model
 class method
-<tt>(resource_use_block_class).get_all_blocks()</tt> to select the right use-blocks for the resource.
+<tt>(resource_use_block_class).get_all_blocks()</tt>
+to select the right use-blocks for the resource.
 A resource class name and id are are joined with
 a '_' to form a tag that also serves as an id for the DOM.
 
@@ -58,17 +62,18 @@ Basic timezone-aware classes (ZTime*) for those are included in this gem.
 
 ### Configuration File
 
-The schedule configuration comes from <tt>config/resource_schedule.yml</tt> which has
+The schedule configuration comes from
+<tt>config/resource_schedule.yml</tt> which has
 three top-level sections:
 
 - ResourceKinds:  A hash where the key is a Resource and the value is a UseBlock. (Both are class names),
 - Resources:  A list where each item is a Resource Class followed by one or more resource ids, and
 - visibleTime:  The visible timespan of the schedule in seconds.
 
-The example file <tt>config/resource_schedule.yml</tt>  (installed
-when you run <tt>schedulify</tt>) should be enough
-to display a two-row schedule with just the date above
-and the hour below.  Of course you can monkey-patch
+The example file <tt>config/resource_schedule.yml</tt>
+(installed when you run <tt>schedulify</tt>) should be
+enough to display a two-row schedule with just the date
+above and the hour below.  Of course you can monkey-patch
 or subclass these classes for your own needs.
 
 
