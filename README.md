@@ -1,17 +1,32 @@
 #ScheduledResource
 
-This gem is for displaying how something is used over periods of time.
-It began life as a Rails/Ajax TV schedule but over time I've used it for
-other things and found it useful.
+This gem is for displaying how things are used over time -- a schedule for a
+set of resources.  It provides a way to describe what is being displayed, along
+with utilities and protocols to connect them:
 
-A _scheduled resource_ is something that can be used for one thing at a time.  Say a TV station
-(resource) is scheduled to show "Mr Ed" from 10am to 11am on Saturday.  That showing is a _resource use block_.
-Each resource gets one row in the display.
+ - Configuration (specification and management).
+ - Query interfaces (RESTlike API and protocols to query the models).
+ - A basic Rails controller implementation.
 
-Resources and use_blocks are often models in a Rails app.  
+We have outlined how to model and generate the data, and how to retrieve it
+from the client.  At this point we could say the gem is largely view-agnostic.
+But to get a satisfying client-side experience the gem includes client-side
+modules to:
+
+ - Manage <b>time and display geometries</b> with "infinite" scrolling along the time axis.
+ - <b>Format display cells</b> in ways specific to the resource models.
+ - <b>Update text justification</b> as the display is scrolled horizontally.
+
+
+### Configuration Management
+
+A _scheduled resource_ is something that can be used for one thing at a time.
+Say "Rocky & Bullwinkle" is on channel 3 from 10am to 11am on Saturday.  Then
+'channel 3' is the <u>resource</u> and that showing is a <u>resource-use block</u>.
+Resources and use-blocks are typically Rails models.  Each resource and its
+use-blocks get one row in the display.
+
 The schedule configuration comes from <tt>config/resource_schedule.yml</tt>
-
-
 
 The <b>ScheduledResource</b> class manages resource and use_block class names, id's and labels for a schedule.  A ScheduledResource instance ties together:
 
@@ -24,8 +39,8 @@ The id is used to
   - select instances of the <em>resource use block</em> class (eg Program).
 
 The id <em>could</em> be a database id but more often is something a
-little more suited to human use in the configuration file.  In any case
-it is used by class methods
+little more suited to human use in the configuration.  In any case
+it is used by model class method
 <tt>ResourceUseBlock.get_all_blocks()</tt> to select the right blocks
 for the resource.
 
@@ -34,7 +49,7 @@ serve as ids for the DOM.
 
 
 
-## Configuration 
+## Configuration File
 
 Configuration is loaded from config/resource_schedule.yml which has three
 top-level sections:
@@ -44,10 +59,22 @@ top-level sections:
 
 
 
+
+
 Something else you would see in a schedule would be headers and labels
 -- perhaps one row with the date and another row with the hour.
 Headers with labels also fit the model of resources and use_blocks.
 Basic timezone-aware classes (ZTime*) for those are included in this gem.
+
+
+
+
+
+
+### More About Configuration Management
+
+
+
 
 
 
