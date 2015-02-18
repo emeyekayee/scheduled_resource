@@ -49,8 +49,8 @@ def insert_js_requires( file )
   manifest_lines[ix] << js_require_content
   puts "[modify] writing `#{file}'"
   File.open(file, "w") { |f| f.write( manifest_lines.join ) }
-rescue
-  puts "Failed to edit file #{file}; continuing..."
+rescue Exception => e
+  puts "Failed to edit file #{file};\n#{e}; continuing..."
   puts "Be sure these js dependencies are handled:\n#{js_require_content}\n\n"
 end
 
@@ -62,13 +62,13 @@ end
 
 def insert_css_requires( file )
   manifest_lines = IO.readlines( file )
-  ix = manifest_lines.index{|l| l =~ %r[/^ *\*= require/] }
+  ix = manifest_lines.index{|l| l =~ %r[^ *\*= require] }
 
   manifest_lines[ix] = css_require_content + manifest_lines[ix]
   puts "[modify] writing `#{file}'"
   File.open(file, "w") { |f| f.write( manifest_lines.join ) }
-rescue
-  puts "Failed to edit file #{file}; continuing..."
+rescue Exception => e
+  puts "Failed to edit file #{file};\n#{e}; continuing..."
   puts "Be sure these css dependencies are handled:\n#{css_require_content}\n\n"
 end
 
