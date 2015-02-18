@@ -27,14 +27,19 @@ client-side modules to:
 
 ## Configuration Management
 
-A **scheduled resource** is something that can be used for one thing at a time.
-Say "Rocky & Bullwinkle" is on channel 3 from 10am to 11am on Saturday.  Then
-'channel 3' is the <u>resource</u> and that showing is a <u>resource-use block</u>.
-Resources and use-blocks are typically Rails models.  Each resource and its use-blocks get one row in the
-display.  That row has a label to the left with some
-timespan visible on the rest of the row.
+A **scheduled resource** is something that can be
+used for one thing at a time.  Say "Rocky & Bullwinkle"
+is on channel 3 from 10am to 11am on Saturday.  Then
+'channel 3' is the <u>resource</u> and that showing of
+the is a <u>resource-use block</u>.  Resources and 
+use-blocks are typically Rails models.  Each resource
+and its use-blocks get one row in the display.  That
+row has a label to the left with some timespan visible
+on the rest of the row.
 
-The <b>ScheduledResource</b> class manages resource and use_block class names, id's and labels for a schedule.  A ScheduledResource instance ties together:
+The <b>ScheduledResource</b> class manages resource and
+use-block class names, id's and labels for a schedule.
+A ScheduledResource instance ties together:
 
  1. A resource class (eg TvStation),
  2. An id (a channel number in this example), and
@@ -57,7 +62,8 @@ Something else you would expect see in a schedule
 would be headers and labels -- perhaps one row with
 the date and another row with the hour.  Headers and
 labels also fit the model of resources and use_blocks.
-Basic timezone-aware classes (ZTime*) for those are included in this gem.
+Basic timezone-aware classes (ZTime*) for those are
+included in this gem.
 
 
 ### Configuration File
@@ -71,7 +77,7 @@ three top-level sections:
 - visibleTime:  The visible timespan of the schedule in seconds.
 
 The example file <tt>config/resource_schedule.yml</tt>
-(installed when you run <tt>schedulify</tt>) should be
+(installed when you run <tt>schedulize</tt>) should be
 enough to display a two-row schedule with just the date
 above and the hour below.  Of course you can monkey-patch
 or subclass these classes for your own needs.
@@ -83,13 +89,13 @@ The endpoint uses parameters <tt>t1</tt> and
 <tt>t2</tt> to specify a time interval for the request.
 A third parameter <tt>inc</tt> allows an initial time
 window to be expanded without repeating blocks that
-span those boundaries.  The time parameters plus the
-configured resources define the data to be returned.
+span those boundaries.  The time parameters _plus the
+configured resources_ define the data to be returned.
 
 
 ### More About Configuration Management
 
-Once the configuration yaml file is loaded that data is
+Once the configuration yaml is loaded that data is
 maintained in the session structure.  Of course having
 a single configuration file limits the application's
 usefulness.  A more general approach would be to

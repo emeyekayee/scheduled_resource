@@ -136,9 +136,38 @@ visibleTime: 3.hours
 Resources:
    - ZTimeHeaderDay       -8
    - ZTimeHeaderHour      -8
+   - ZTimeHeaderDay       -5
+   - ZTimeHeaderHour      -5
 }
 
 place_file( base, 'config/resource_schedule.yml', config_content)
 
 
-insert_js_requires( js_manifest(base) )
+
+controller_content = <<-CONTROLLER
+# Needed this here to get the ZTime* classes in time for session.
+require 'scheduled_resource'
+
+class ScheduleController < ApplicationController
+  include ScheduledResource::Helper
+
+  before_action :ensure_schedule_config
+
+
+  # Returns angularjs page (template) which in turn fetches data.
+  def index
+  end
+
+
+  # Json data.
+  def schedule
+    get_data_for_time_span
+
+    render json: @blockss
+  end
+
+end
+CONTROLLER
+
+place_file( base, 'app/controllers/schedule_controller.rb', controller_content)
+

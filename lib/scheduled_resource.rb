@@ -3,15 +3,10 @@
 #   (http://github.com/emeyekayee/scheduled_resource)
 # MIT License.
 #
-# ============================================================================
-# Hi-lock: (("# [T]TD.*"                                      (0 'accent10 t)))
-# Hi-lock: (("\\(^\\|\\W\\)\\*\\(\\w.*\\w\\)\\*\\(\\W\\|$\\)" (2 'accent3  t)))
-# Hi-lock: end
-# ============================================================================
 
-require "scheduled_resource/version"
-
-require 'resource_use_block'
+require 'scheduled_resource/version'
+require 'scheduled_resource/resource_use_block'
+require 'scheduled_resource/helper'
 
 require 'z_time_header'
 require 'z_time_header_day'
@@ -39,8 +34,8 @@ require 'z_time_label_hour'
 # b) select instances of the <em>resource use block</em> class (eg Meeting).
 #
 # The id <em>may</em> be a database id but need not be.
-# It is used by model class method
-# <tt>ResourceUseBlock.get_all_blocks</tt>.
+# It is used by class methods
+# <tt>get_all_blocks()</tt> of model use-block classes.
 # Not tying this to a database id allows a little extra flexibility in
 # configuration.
 #
@@ -130,8 +125,9 @@ class ScheduledResource
   #--
   # Restore configuration from session.
   #
-  # OK, Ok, this would not be RESTful if we were actually maintaining any
-  # state here -- it's just a cache.  If there <em>were</em> such state it
+  # When we depend on data in the configuration to satisfy a query we are not
+  # being RESTful.  On the other hand we are not maintaining changeable state
+  # here -- it's just a cache.  If there <em>were</em> changeable state it
   # would likely be kept, eg, in a per-user table in the database.
   #++
   def self.ensure_config( session ) # :nodoc:
@@ -141,6 +137,7 @@ class ScheduledResource
   end
 
 
+  # ToDo: Generalize this so configuration can be loaded on per-user.
   # Process configuration file.
   def self.config_from_yaml( session )
     config_from_yaml1
@@ -181,7 +178,15 @@ class ScheduledResource
       end
     end
 
-    config[:visible_time] = (vt = yml['visibleTime']) ? (eval vt) : 3.hours
+    vt = yml['visibleTime']
+    config[:visible_time]   = vt ? (eval vt) : 3.hours
+
+    t0 = yml['timeRangeMin']
+    config[:time_range_min] = t0 ? (eval t0) : (Time.now - 1.week)
+
+    tn = yml['timeRangeMax']
+    config[:time_range_max] = tn ? (eval tn) : (Time.now - 1.week)
+
     config
   end
 
