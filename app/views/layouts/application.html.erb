@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html  lang='en' ng-app='srApp'>
+<head>
+  <title>Scheduled Resource Example <%= controller.action_name %></title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <div class="container">
+
+    <%= yield %>
+
+    <!--Body content-->
+    <div class="row"> <!-- -fluid -->
+      <div id="schedule-container"
+           ng-controller="ResourceListCtrl"> 
+
+        <div id="labels-container">
+          <div id="resource-labels">
+            <div ng-controller="LabelListCtrl"
+                 ng-repeat="rsrc in rsrcs"
+                 class="rsrcRow {{ rsrc.tag | rowKind }}row">
+
+              <div class="rsrclabel">
+                <img ng-src="/assets/{{ rsrc.label }}.jpg" title="{{ rsrc.title }}" />
+                <div class="filter"> </div>
+                <div class="label-text">{{rsrc.label}}</div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div id="timespans-container">
+          <div id="scrolling-container">
+            <div id="positioned-container">
+              <div id="current-time-cursor"> </div>
+
+              <div ng-repeat="res_tag in res_tags"
+                   ng-controller="UseBlockListCtrl"
+                   class="rsrcRow {{ res_tag | rowKind }}row">
+                
+                <div class="timespan">
+                  <div ng-repeat="block in use_blocks" 
+                       ng-controller="UseBlockCtrl"
+                       class="{{ block.css_classes }} blockdiv"
+                       style="{{ block | style_geo }} ">
+
+                    <div class="text_locator">
+                      <a href="" ng-bind-html-unsafe="block.label"></a>
+                    </div>
+
+                    <!-- app/views/schedule/_block_internal.html.erb -->
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+              
+        
+
+      </div> <!-- end ResourceListCtrl -->
+    </div>
+
+  </div>
+</body>
+</html>

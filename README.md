@@ -45,7 +45,7 @@ Basic timezone-aware classes (ZTime*) for those are
 included in this gem.
 
 
-### Configuration File
+### Config File
 
 The schedule configuration comes from
 <tt>config/resource_schedule.yml</tt> which has
@@ -144,10 +144,46 @@ the controller helper methods in
 <tt>lib/scheduled_resource/helper.rb</tt>
 
 
+## Testing
 
-## Usage
+This gem also provides for a basic test application
+using angularjs to display a minimal but functional
+schedule showing just the day and hour headers in
+two different timezones (US Pacific and Eastern).
+Proceed as follows, starting with a fresh Rails app:
 
-To Do: Write usage instructions here
+    $ rails new test_sr
+
+As above, add the gem to the Gemfile, then 
+
+    $ cd test_sr
+    $ bundle
+    $ schedulize .
+
+Add lines such as these to <tt>config/routes.rb</tt>
+
+    get "/schedule/index" => "schedule#index"
+    get "/schedule"       => "schedule#schedule"
+
+Copy / merge these files from the gem source into
+the test app:
+
+    $SR_SRC/app/views/layouts/application.html.erb
+    $SR_SRC/app/views/schedule/index.html.erb
+    $SR_SRC/app/assets/javascripts/angular.js
+    $SR_SRC/app/assets/javascripts/script.js,controllers.js
+    $SR_SRC/app/assets/javascripts/controllers.js
+
+and add <tt>//= require angular</tt> to application.js
+just below the entries for <tt>jquery</tt>.
+
+After you run the server and browse to
+
+    http://0.0.0.0:3000/schedule/index
+
+you should see the four time-header rows specified
+by the sample config file.
+
 
 ## Contributing
 
