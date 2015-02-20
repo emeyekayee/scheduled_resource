@@ -12,7 +12,7 @@ class @ZTimeHeaderDayUseBlock extends UseBlock
 
   @label: (block) ->
     block.label  = block.title
-  
+
   @css_classes: (block) ->
     # Could just as well come from server.
     classes = 'ZTimeHeaderDayRow '
@@ -30,7 +30,7 @@ class @ZTimeHeaderHourUseBlock extends UseBlock
 
   @label: (block) ->
     block.label  = block.title
-  
+
   @css_classes: (block) ->
     # Could just as well come from server.
     # classes = 'ZTimeHeaderHourRow '
@@ -42,7 +42,7 @@ class @ZTimeHeaderHourUseBlock extends UseBlock
 
 
 
-# Uses these fields of block: title, subtitle, category, category_type, 
+# Uses these fields of block: title, subtitle, category, category_type,
 # Sets these fields of block: label, css_classes
 class @StationUseBlock extends UseBlock
   constructor: -> nil
@@ -79,7 +79,7 @@ class @StationUseBlock extends UseBlock
   @css_class_search: (category) ->
     for key, regex of @categories
       return ('cat_' + key) if regex.test category
-    'cat_Unknown' 
+    'cat_Unknown'
 
 
   @memo: {}

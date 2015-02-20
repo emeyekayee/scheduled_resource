@@ -1,9 +1,9 @@
 #ScheduledResource
 
 This gem is for displaying how things are used
-over time -- a schedule for a set of resources.  It
-provides a way to specify what is to be displayed,
-along with utilities and protocols to connect them:
+over time -- a schedule for a set of "resources".  You
+can configure the elements of the schedule and there
+are utilities and protocols to connect them:
 
  - Configuration (specification and management),
  - Query interfaces (a REST-like API and internal protocols to query the models), and
@@ -11,12 +11,12 @@ along with utilities and protocols to connect them:
 
 We have a way to configure the schedule, internal
 methods to generate the data, and a way to retrieve
-data from the client.  But the gem is largely
+data from the client.  However this gem is largely
 view-framework agnostic.  We could use a variety of
 client-side packages or even more traditional Rails
 view templates to generate HTML.
 
-But in any case, to get a nice feel in a display like
+In any case, to get a good feel in a display like
 this we need some client-side code.  The gem includes
 client-side modules to:
 
@@ -104,9 +104,6 @@ have a user model with login and configuration would
 be associated with the user.
 
 
-
-
-
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -170,9 +167,7 @@ the test app:
 
     $SR_SRC/app/views/layouts/application.html.erb
     $SR_SRC/app/views/schedule/index.html.erb
-    $SR_SRC/app/assets/javascripts/angular.js
-    $SR_SRC/app/assets/javascripts/script.js,controllers.js
-    $SR_SRC/app/assets/javascripts/controllers.js
+    $SR_SRC/app/assets/javascripts/{angular.js,script.js,controllers.js}
 
 and add <tt>//= require angular</tt> to application.js
 just below the entries for <tt>jquery</tt>.
@@ -183,6 +178,18 @@ After you run the server and browse to
 
 you should see the four time-header rows specified
 by the sample config file.
+
+
+## More Examples
+
+A better place to see the use of this gem is at
+[tv4](https://github.com/emeyekayee/tv4).  Specifically,
+models <tt>app/models/event.rb</tt> and
+<tt>app/models/station.rb</tt> give better examples of
+implementing the ScheduledResource protocol and adapting
+to a db schema organized along somewhat different lines.
+
+
 
 
 ## Contributing

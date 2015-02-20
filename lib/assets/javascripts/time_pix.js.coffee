@@ -8,7 +8,7 @@ class @TimePix            # Ultimately, an angular $service
     @scroll_container().css( 'width', @pixWindow + 'px' )
     $('#scrollbar-hider').css('width', @pixWindow + 61 + 'px' )
 
-  
+
   @baseTime: 0
   @timeWindow: (3 * 3600)
   @pixWindow: 750         # Matching width of #scrolling-container
@@ -42,7 +42,7 @@ class @TimePix            # Ultimately, an angular $service
   @style_geo: (block) ->
     [s, e] = [block.starttime, block.endtime]             # per margins V
     "left: #{@secs_to_pix_scale(s - @baseTime)}px; " +
-    "width: #{@secs_to_pix_scale(e-s)-4}px;" 
+    "width: #{@secs_to_pix_scale(e-s)-4}px;"
 
   @row_kind: (tag) ->  # may/may not belong here.
     tag.split('_')[0]
@@ -67,7 +67,7 @@ class @TimePix            # Ultimately, an angular $service
     @scroll_to_ux_time( @thi - @timeWindow )
 
   @ux_time_of_pix: (x) ->
-    @pix_to_secs(x) 
+    @pix_to_secs(x)
 
   @scroll_to_tlo: =>   # bound
     @scroll_to_ux_time @tlo
