@@ -185,7 +185,7 @@ class ScheduledResource
     config[:time_range_min] = t0 ? (eval t0) : (Time.now - 1.week)
 
     tn = yml['timeRangeMax']
-    config[:time_range_max] = tn ? (eval tn) : (Time.now - 1.week)
+    config[:time_range_max] = tn ? (eval tn) : (Time.now + 1.week)
 
     config
   end

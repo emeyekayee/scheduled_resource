@@ -128,7 +128,7 @@ This will install a few image placeholders,
 client-side modules and a stylesheet under 
 <tt>vendor/assets</tt>, an example configuration
 in <tt>config/resource_schedule.yml</tt> and
-and example controller in
+an example controller in
 <tt>app/controllers/schedule_controller.rb</tt>.
 
 Also, if you use
