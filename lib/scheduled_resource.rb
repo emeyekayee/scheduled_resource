@@ -20,7 +20,7 @@ require 'z_time_label_hour'
 # Example: A Room (resource) is scheduled for a meeting (resource use block)
 # titled "Weekly Staff Meeting" tomorrow from 9am to 11am.
 #
-# Class SchedResource manages class names, id's and labels for a
+# Class ScheduledResource manages class names, id's and labels for a
 # schedule.  An instance ties together:
 #
 #  1. A resource class (eg Room),
@@ -67,19 +67,19 @@ class ScheduledResource
 
   class_attribute :config
 
-  # (SchedResource protocol) Returns a hash where each key is an
+  # (ScheduledResource protocol) Returns a hash where each key is an
   # <tt>rid</tt> and the value is an array of resource use
   # blocks in the interval <tt>t1...t2</tt>, ordered by
   # <tt>starttime</tt>.
   #
-  # What <em>in</em> means depends on <em>inc</em>.  If inc(remental) is 
+  # What <em>in</em> means depends on <em>inc</em>.  If inc(remental) is
   # false, the client is building the interval from scratch.  If "hi", it is
   # an addition to an existing interval on the high side.  Similarly
   # for "lo".  This is to avoid re-transmitting blocks that span the
   # current time boundaries on the client.
   #
   # Here the resource is a channel and the use blocks are programs.
-  # 
+  #
   # ==== Parameters
   # * <tt>rids</tt> - A list of schedules resource ids (strings).
   # * <tt>t1</tt>   - Start time.
@@ -102,7 +102,7 @@ class ScheduledResource
     blockss
   end
 
-  
+
   # ==== Parameters
   # * <tt>name</tt>  - The class name (string) of a schedule resource.
   #
@@ -114,7 +114,7 @@ class ScheduledResource
 
 
   # ==== Returns
-  # * <tt>Array[SchedResource]</tt> - List of all configured SchedResources .
+  # * <tt>Array[ScheduledResource]</tt> - List of configured ScheduledResources.
   def self.resource_list; config[:all_resources] end
 
   # ==== Returns
@@ -167,7 +167,7 @@ class ScheduledResource
     yml = YAML.load_file CONFIG_FILE
 
     yml['ResourceKinds'].each do |key, val| # {"Channel" => "Program"...}
-      config[:block_class_for_resource_kind][key] = val # eval
+      config[:block_class_for_resource_kind][key] = val # class name (string)
     end
 
     if (rkls = yml['Resources'])        # Resource Kind Lists, eg
@@ -190,7 +190,7 @@ class ScheduledResource
     config
   end
 
-  
+
   def self.add_resources(rsrcs)
     rs = config[:all_resources]
     rsrcs.each{ |rsrc| rs.include?( rsrc ) || rs << rsrc }
@@ -236,16 +236,16 @@ class ScheduledResource
   def kind()    @tag.sub( /_.*/, '' )          end
 
   # ==== Returns
-  # * <tt>String</tt> - The <tt>rid</tt> (abstract id) of the SchedResource.
+  # * <tt>String</tt> - The <tt>rid</tt> (abstract id) of the ScheduledResource.
   def sub_id()  @tag.sub( /.*_/, '' )          end
 
   def to_s() # :nodoc:
     @tag
-  end 
+  end
 
   def inspect() # :nodoc:
-    "<#SchedResource \"#{@tag}\">"
-  end 
+    "<#ScheduledResource \"#{@tag}\">"
+  end
 
   attr_accessor :label, :title
   def label();     @label || @tag end
