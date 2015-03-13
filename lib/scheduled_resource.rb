@@ -109,7 +109,7 @@ class ScheduledResource
   # ==== Returns
   # * <tt>Class</tt> - The class representing the <em>use</em> of that resource for an interval of time.
   def self.block_class_for_resource_name( name )
-    config[:block_class_for_resource_kind][name]
+    config[:block_class_for_resource_kind][name].constantize
   end
 
 
@@ -166,8 +166,8 @@ class ScheduledResource
                    }
     yml = YAML.load_file CONFIG_FILE
 
-    yml['ResourceKinds'].each do |key, val| # {"Channel" => <#Class Program>...}
-      config[:block_class_for_resource_kind][key] = eval val
+    yml['ResourceKinds'].each do |key, val| # {"Channel" => "Program"...}
+      config[:block_class_for_resource_kind][key] = val # eval
     end
 
     if (rkls = yml['Resources'])        # Resource Kind Lists, eg
