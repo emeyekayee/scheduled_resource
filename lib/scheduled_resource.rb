@@ -87,7 +87,7 @@ class ScheduledResource
   # * <tt>inc</tt>  - One of nil, "lo", "hi" (See above).
   #
   # ==== Returns
-  # * <tt>Hash</tt> - Each key is an <tt>rid</tt> and the value is an array of resource use blocks in the interval, ordered by <tt>starttime</tt>.
+  # * <tt>Hash</tt> - Each key is an <tt>rid</tt>; value is a list of blocks.
   def self.get_all_blocks(t1, t2, inc)
     blockss = {}
 
@@ -118,7 +118,7 @@ class ScheduledResource
   def self.resource_list; config[:all_resources] end
 
   # ==== Returns
-  # * <tt>Time</tt> - The configured width of the visible time window.
+  # * <tt>Numeric</tt> - The configured width (seconds) of visible time window.
   def self.visible_time;  config[:visible_time] end
 
 
